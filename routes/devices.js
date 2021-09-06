@@ -34,4 +34,19 @@ router.post('/new', function(req, res) {
   })
 });
 
+
+////////// PUT ///////////
+router.put("/devices/:deviceId",function(id,data,res){
+  sql.query(`update devices set name= ?,umei=?, where id =?`,[
+    data['name'],data["imei"],id
+  ],
+  (err,res)=>{
+    if (err) throw err;
+
+
+  }
+  );
+
+})
+
 module.exports = router;

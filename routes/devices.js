@@ -32,13 +32,21 @@ router.post('/new', function(req, res) {
 //update the name
 router.put('/modifier:id', function(req, res,) {
 
-    let sql = "update device set name=?,imei=? where id=?",[];
+  let id=  req.body['id'];
+  let name=  req.body['name'];
+  let imei=  req.body['imei'];
 
-    db.query(sql, function(err, data, fields) {
+
+    let sql = "update device set name=?,imei=? where id=?";
+
+    db.query(sql,[
+      name,imei,id
+          ], function(err, data, fields) {
         if (err) throw err;
         res.json({
             status:200,
-            message:data
+            data:result,
+            message:"user has been updated"
         });
         
         });
@@ -47,14 +55,18 @@ router.put('/modifier:id', function(req, res,) {
 
 //delete 
     router.delete('/supp', function(req, res) {
-    db.connect(function(err) {
-        if (err) throw err;
-        var sql = "DELETE FROM devices WHERE id = '987654321'";
-        con.query(sql, function (err, result) {
+      let id=  req.body['id'];
+        let sql = "DELETE FROM devices WHERE id = ?";
+      db.query(sql,[
+        id
+            ], function(err, data, fields) {
           if (err) throw err;
-          console.log("Number of records deleted: " + result.affectedRows);
-        });
-      });
+          res.json({
+              status:200,
+              data:result,
+              message:"user has been deleted"
+          });
+          });
     });
 
 
